@@ -205,17 +205,25 @@ router.put(
 );
 
 // Delete experience
-router.delete("/experience/:exp_id", auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-   console.log('EXE :', profile)
-   const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
-   profile.experience.splice(removeIndex, 1);
-   await profile.save();
-   res.json(profile)
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+router.delete('/experience/:exp_id', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({user: req.user.id});
+
+        // const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id)
+        // console.log('REMOVE :', removeIndex)
+        // profile.experience.splice(removeIndex, 1);
+
+
+        const removeExp = profile.experience.filter( item => item.id !== req.params.exp_id);
+        profile.experience = removeExp;
+
+        await profile.save();
+
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 module.exports = router;
