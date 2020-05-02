@@ -100,6 +100,7 @@ const EditProfile = ({
             name="company"
             value={company}
             onChange={(e) => onChange(e)}
+            required
           />
           <small className="form-text">
             Could be your own company or one you work for
