@@ -145,9 +145,9 @@ router.put("/unlike/:id", auth, async (req, res) => {
   }
 });
 
-//POST api/posts/comments/:id
+//POST api/posts/comment/:id
 router.post(
-  "/comments/:id",
+  "/comment/:id",
   [auth, [check("text", "Text is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -169,7 +169,7 @@ router.post(
       post.comments.unshift(newComment);
       await post.save();
 
-      res.json(post);
+      res.json(post.comments);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
