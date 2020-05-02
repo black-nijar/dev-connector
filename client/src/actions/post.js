@@ -55,6 +55,7 @@ export const removeLike = (id) => async (dispatch) => {
       payload: { id, likes: res.data },
     });
   } catch (err) {
+    
     dispatch({
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
